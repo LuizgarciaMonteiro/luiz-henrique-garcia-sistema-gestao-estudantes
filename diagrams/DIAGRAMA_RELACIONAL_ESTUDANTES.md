@@ -1,6 +1,6 @@
 erDiagram
     CURSOS ||--o{ DISCIPLINAS : "possui"
-    CURSOS ||--o{ ALUNOS : "matricula"
+    CURSOS ||--o{ ALUNOS : "possui"
     ALUNOS ||--o{ NOTAS : "recebe"
     DISCIPLINAS ||--o{ NOTAS : "avalia"
 
