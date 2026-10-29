@@ -61,3 +61,36 @@ class Controller_Nota:
     aluno = self.ctrl_aluno.buscar_aluno(oracle, df.matricula.values[0])
     disciplina = self.ctrl_disciplina.buscar_disciplina(oracle, df.id_disciplina.values[0])
     return Nota(df.id_nota.values[0], aluno, disciplina, df.semestre.values[0], df.atividade.values[0], float(df.nota.values[0]))
+
+
+
+  def atualizar_nota(self) -> Nota:
+    oracle = OracleQueries(can_write=True)
+    oracle.connect()
+
+    self.listar_notas(oracle)
+    id_nota = input("ID da nota que deseja alterar: ")
+    if not id_nota.isdigit() or not self.verifica_existencia_nota(oracle, id_nota):
+      print(f"A nota {id_nota} não existe.")
+      return None
+
+    nova_atividade = input("Atividade (Nova): ")
+    novo_semestre = input("Semestre (Novo, ex.: 2026/2): ").strip()
+    if len(novo_semestre) != 6 or novo_semestre[4] != "/":
+      print("O semestre deve estar no formato AAAA/S, por exemplo 2026/2.")
+      return None
+    novo_valor = self.ler_nota("Nota (Nova, 0 a 10): ")
+    if novo_valor is None:
+      return None
+
+    oracle.write(f"update notas set atividade = '{nova_atividade}', semestre = '{novo_semestre}', nota = {novo_valor} where id_nota = {id_nota}")
+    nota_atualizada = self.buscar_nota(oracle, id_nota)
+    print(nota_atualizada.to_string())
+    return nota_atualizada
+
+  def listar_notas(self, oracle:OracleQueries):
+    print(oracle.sqlToDataFrame("select n.id_nota, a.nome as aluno, d.nome as disciplina, n.atividade, n.nota from notas n inner join alunos a on a.matricula = n.matricula inner join disciplinas d on d.id_disciplina = n.id_disciplina order by n.id_nota"))
+
+  def verifica_existencia_nota(self, oracle:OracleQueries, id_nota:str) -> bool:
+    df_nota = oracle.sqlToDataFrame(f"select id_nota from notas where id_nota = {id_nota}")
+    return not df_nota.empty
