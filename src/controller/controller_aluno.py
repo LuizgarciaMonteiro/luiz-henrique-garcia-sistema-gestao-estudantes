@@ -68,3 +68,32 @@ class Controller_Aluno:
 
   def listar_alunos(self, oracle:OracleQueries):
     print(oracle.sqlToDataFrame("select matricula, nome from alunos order by nome"))
+
+
+  def excluir_aluno(self):
+    oracle = OracleQueries(can_write=True)
+    oracle.connect()
+
+    self.listar_alunos(oracle)
+    matricula = input("Matrícula do aluno que deseja excluir: ").strip()
+    if not self.verifica_existencia_aluno(oracle, matricula):
+      print(f"A matrícula {matricula} não existe.")
+      return
+
+    # Confirmação antes de remover
+    confirmacao = input("Deseja realmente excluir este aluno? (S/N): ")
+    if confirmacao.strip().upper() != "S":
+      print("Exclusão cancelada.")
+      return
+
+    # Verifica se o aluno é usado como FK na tabela de notas
+    df_notas = oracle.sqlToDataFrame(f"select count(1) as total from notas where matricula = '{matricula}'")
+    total_notas = int(df_notas.total.values[0])
+    if total_notas > 0:
+      print(f"Este aluno não pode ser excluído: possui {total_notas} nota(s) vinculada(s).")
+      return
+
+    aluno_excluido = self.buscar_aluno(oracle, matricula)
+    oracle.write(f"delete from alunos where matricula = '{matricula}'")
+    print("Aluno removido com sucesso!")
+    print(aluno_excluido.to_string())
