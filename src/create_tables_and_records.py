@@ -1,54 +1,31 @@
 from conexion.oracle_queries import OracleQueries
 
-def create_tables(query:str):
-    list_of_commands = query.split(";")
+def executar_script(caminho:str):
+  # Lê o arquivo e separa os comandos pelo ponto e vírgula
+  with open(caminho, encoding="utf-8") as f:
+    comandos = f.read().split(";")
 
-    oracle = OracleQueries(can_write=True)
-    oracle.connect()
+  oracle = OracleQueries(can_write=True)
+  oracle.connect()
 
-    for command in list_of_commands:    
-        if len(command) > 0:
-            print(command)
-            try:
-                oracle.executeDDL(command)
-                print("Successfully executed")
-            except Exception as e:
-                print(e)            
-
-def generate_records(query:str, sep:str=';'):
-    list_of_commands = query.split(sep)
-
-    oracle = OracleQueries(can_write=True)
-    oracle.connect()
-
-    for command in list_of_commands:    
-        if len(command) > 0:
-            print(command)
-            oracle.write(command)
-            print("Successfully executed")
+  for comando in comandos:
+    comando = comando.strip()
+    if len(comando) > 0:
+      print(comando)
+      try:
+        oracle.write(comando)
+        print("Executado com sucesso")
+      except Exception as e:
+        print(e)
 
 def run():
+  print("Criando tabelas...")
+  executar_script("../sql/create_tables_estudantes.sql")
+  print("Tabelas criadas!")
 
-    with open("../sql/create_tables_pedidos.sql") as f:
-        query_create = f.read()
-
-    print("Creating tables...")
-    create_tables(query=query_create)
-    print("Tables successfully created!")
-
-    with open("../sql/inserting_samples_records.sql") as f:
-        query_generate_records = f.read()
-
-    print("Gerenating records")
-    generate_records(query=query_generate_records)
-    print("Records successfully generated!")
-
-    with open("../sql/inserting_samples_related_records.sql") as f:
-        query_generate_related_records = f.read()
-
-    print("Gerenating records")
-    generate_records(query=query_generate_related_records, sep='--')
-    print("Records successfully generated!")
+  print("Gerando registros de exemplo...")
+  executar_script("../sql/inserting_samples_records.sql")
+  print("Registros gerados!")
 
 if __name__ == '__main__':
-    run()
+  run()
