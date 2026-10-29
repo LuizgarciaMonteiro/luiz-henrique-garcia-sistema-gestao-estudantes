@@ -78,3 +78,32 @@ class Controller_Disciplina:
     df = oracle.sqlToDataFrame(f"select d.id_disciplina, d.nome, d.carga_horaria, c.id_curso, c.nome as nome_curso, c.duracao_semestres from disciplinas d inner join cursos c on c.id_curso = d.id_curso where d.id_disciplina = {id_disciplina}")
     curso = Curso(df.id_curso.values[0], df.nome_curso.values[0], df.duracao_semestres.values[0])
     return Disciplina(df.id_disciplina.values[0], df.nome.values[0], df.carga_horaria.values[0], curso)
+
+
+  def excluir_disciplina(self):
+    oracle = OracleQueries(can_write=True)
+    oracle.connect()
+
+    self.listar_disciplinas(oracle)
+    id_disciplina = input("ID da disciplina que deseja excluir: ")
+    if not id_disciplina.isdigit() or not self.verifica_existencia_disciplina(oracle, id_disciplina):
+      print(f"A disciplina {id_disciplina} não existe.")
+      return
+
+    # Confirmação antes de remover
+    confirmacao = input("Deseja realmente excluir esta disciplina? (S/N): ")
+    if confirmacao.strip().upper() != "S":
+      print("Exclusão cancelada.")
+      return
+
+    # Verifica se a disciplina é usada como FK na tabela de notas
+    df_notas = oracle.sqlToDataFrame(f"select count(1) as total from notas where id_disciplina = {id_disciplina}")
+    total_notas = int(df_notas.total.values[0])
+    if total_notas > 0:
+      print(f"Esta disciplina não pode ser excluída: possui {total_notas} nota(s) vinculada(s).")
+      return
+
+    disciplina_excluida = self.buscar_disciplina(oracle, id_disciplina)
+    oracle.write(f"delete from disciplinas where id_disciplina = {id_disciplina}")
+    print("Disciplina removida com sucesso!")
+    print(disciplina_excluida.to_string())
