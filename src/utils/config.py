@@ -7,21 +7,17 @@ MENU_PRINCIPAL = """Menu Principal
 """
 
 MENU_RELATORIOS = """Relatórios
-1 - Relatório de Pedidos por Fornecedores
-2 - Relatório de Pedidos
-3 - Relatório de Produtos
-4 - Relatório de Clientes
-5 - Relatório de Fornecedores
-6 - Relatório de Itens de Pedidos
-0 - Sair
+1 - Média por Turma (disciplina e semestre)
+2 - Notas dos Alunos
+0 - Voltar
 """
 
 MENU_ENTIDADES = """Entidades
-1 - PRODUTOS
-2 - CLIENTES
-3 - FORNECEDORES
-4 - PEDIDOS
-5 - ITENS DE PEDIDOS
+1 - CURSOS
+2 - DISCIPLINAS
+3 - ALUNOS
+4 - NOTAS
+0 - Voltar
 """
 
 # Consulta de contagem de registros por tabela
