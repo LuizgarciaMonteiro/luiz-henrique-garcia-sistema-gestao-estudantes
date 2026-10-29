@@ -102,3 +102,12 @@ Cada entrada tem: o prompt, a fonte e o que eu fiz com a resposta.
 - **Fonte:** Claude (Anthropic)
 - **Prompt:** Pedi para fazermos o script SQL juntos, para eu aprender. Escrevi o código de cada tabela e das chaves estrangeiras, e a IA conferiu e apontou erros (`VARCHAR` em vez de `VARCHAR2`, campo faltando, nomes trocados, erros de digitação e tipos diferentes do diagrama). Também perguntei o que era LABDATABASE e o que era "CK".
 - **O que fizemos com a resposta:** A IA explicou cada comando (`CREATE TABLE`, `PRIMARY KEY`, `ALTER TABLE ... FOREIGN KEY`, `CHECK`) e o padrão de nomes do professor. Corrigi meus erros e montei o arquivo `sql/create_tables_estudantes.sql`.
+
+
+
+## Prompt 14 — Classes do modelo em Python
+
+- **Data:** 29/10/2026
+- **Fonte:** Claude (Anthropic)
+- **Prompt:** Pedi para começar a Etapa 2 passo a passo. Escrevi a classe `Curso` com a ajuda da IA, que corrigiu meus erros (setters guardando no atributo errado, nomes inconsistentes, `to_string` faltando). Perguntei por que o `self` existe e se o `=None` é obrigatório. Depois pedi que a IA escrevesse as classes `Disciplina`, `Aluno` e `Nota`, por falta de tempo.
+- **O que fizemos com a resposta:** Li cada classe e respondi a uma pergunta de conferência sobre cada uma (o que acontece com `curso=None`, por que o objeto guarda a associação completa e como chegar ao curso a partir de uma nota). Salvei os arquivos em `src/model/`.
