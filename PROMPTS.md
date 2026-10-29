@@ -111,3 +111,12 @@ Cada entrada tem: o prompt, a fonte e o que eu fiz com a resposta.
 - **Fonte:** Claude (Anthropic)
 - **Prompt:** Pedi para começar a Etapa 2 passo a passo. Escrevi a classe `Curso` com a ajuda da IA, que corrigiu meus erros (setters guardando no atributo errado, nomes inconsistentes, `to_string` faltando). Perguntei por que o `self` existe e se o `=None` é obrigatório. Depois pedi que a IA escrevesse as classes `Disciplina`, `Aluno` e `Nota`, por falta de tempo.
 - **O que fizemos com a resposta:** Li cada classe e respondi a uma pergunta de conferência sobre cada uma (o que acontece com `curso=None`, por que o objeto guarda a associação completa e como chegar ao curso a partir de uma nota). Salvei os arquivos em `src/model/`.
+
+
+
+## Prompt 15 — Controllers em Python
+
+- **Data:** 29/10/2026
+- **Fonte:** Claude (Anthropic)
+- **Prompt:** Por falta de tempo, pedi que a IA escrevesse os controllers (`Controller_Curso`, `Controller_Disciplina`, `Controller_Aluno` e `Controller_Nota`), um método por vez, explicando cada um. Em cada método, respondi a uma pergunta de conferência.
+- **O que fizemos com a resposta:** Salvei cada controller em `src/controller/`. A IA seguiu o molde do `controller_cliente.py` do professor, com sequences para os IDs, verificação de chaves estrangeiras antes de excluir, confirmação S/N e validação da nota entre 0 e 10. O código ainda não foi testado no Oracle. Vou estudar cada controller depois da entrega.
