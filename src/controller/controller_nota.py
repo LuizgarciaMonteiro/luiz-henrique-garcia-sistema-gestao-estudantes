@@ -94,3 +94,25 @@ class Controller_Nota:
   def verifica_existencia_nota(self, oracle:OracleQueries, id_nota:str) -> bool:
     df_nota = oracle.sqlToDataFrame(f"select id_nota from notas where id_nota = {id_nota}")
     return not df_nota.empty
+
+  def excluir_nota(self):
+    oracle = OracleQueries(can_write=True)
+    oracle.connect()
+
+    self.listar_notas(oracle)
+    id_nota = input("ID da nota que deseja excluir: ")
+    if not id_nota.isdigit() or not self.verifica_existencia_nota(oracle, id_nota):
+      print(f"A nota {id_nota} não existe.")
+      return
+
+    # Confirmação antes de remover
+    confirmacao = input("Deseja realmente excluir esta nota? (S/N): ")
+    if confirmacao.strip().upper() != "S":
+      print("Exclusão cancelada.")
+      return
+
+    # A nota não é usada como FK em nenhuma tabela, então pode ser removida
+    nota_excluida = self.buscar_nota(oracle, id_nota)
+    oracle.write(f"delete from notas where id_nota = {id_nota}")
+    print("Nota removida com sucesso!")
+    print(nota_excluida.to_string())
