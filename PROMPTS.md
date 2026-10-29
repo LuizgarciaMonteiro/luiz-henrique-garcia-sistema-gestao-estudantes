@@ -94,3 +94,11 @@ Cada entrada tem: o prompt, a fonte e o que eu fiz com a resposta.
 - **Fonte:** Claude (Anthropic)
 - **Prompt:** Pedi para criar o diagrama.
 - **O que fizemos com a resposta:** A IA escreveu o código Mermaid. Gerei a imagem no mermaid.live, conferi as tabelas e as ligações, troquei o nome de uma ligação e guardei o PNG e o arquivo `.mmd` na pasta `diagrams/`.
+
+- 
+## Prompt 13 — Script de criação das tabelas
+
+- **Data:** 29/10/2026
+- **Fonte:** Claude (Anthropic)
+- **Prompt:** Pedi para fazermos o script SQL juntos, para eu aprender. Escrevi o código de cada tabela e das chaves estrangeiras, e a IA conferiu e apontou erros (`VARCHAR` em vez de `VARCHAR2`, campo faltando, nomes trocados, erros de digitação e tipos diferentes do diagrama). Também perguntei o que era LABDATABASE e o que era "CK".
+- **O que fizemos com a resposta:** A IA explicou cada comando (`CREATE TABLE`, `PRIMARY KEY`, `ALTER TABLE ... FOREIGN KEY`, `CHECK`) e o padrão de nomes do professor. Corrigi meus erros e montei o arquivo `sql/create_tables_estudantes.sql`.
