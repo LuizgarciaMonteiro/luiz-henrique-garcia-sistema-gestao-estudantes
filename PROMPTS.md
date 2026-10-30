@@ -1,122 +1,57 @@
 # PROMPTS.md
 
-Registro dos prompts usados como apoio de IA neste trabalho, conforme o item 5 das Observações Importantes do edital.
+Registro do uso de IA neste trabalho, conforme o item 5 das Observações Importantes do edital. Os prompts estão resumidos por etapa.
 
 - **Ferramenta:** Claude (Anthropic), via Claude Code
 - **Autor dos prompts:** Luiz Henrique Garcia
-- **Como usamos a IA:** um passo de cada vez. Eu peço, leio a explicação, e só então avançamos. O objetivo é entender o código, não só copiá-lo.
+- **Período:** 28/10/2026 a 30/10/2026
+- **Como usei a IA:** trabalhei em passos pequenos. A IA propunha ou escrevia, e eu lia, corrigia, respondia a perguntas de conferência e salvava no repositório.
 
-Cada entrada tem: o prompt, a fonte e o que eu fiz com a resposta.
+## Etapa 1: entendimento do edital e planejamento
 
----
-
-## Prompt 1 — Pedido de ajuda e envio do edital
-
-- **Data:** 28/10/2026
 - **Fonte:** Claude (Anthropic)
-- **Prompt:** Pedi ajuda para o trabalho de banco de dados, informei que estou sem grupo e que o prazo é dia 30, e perguntei se podia enviar a especificação, o tema e o exemplo do professor. Depois enviei o edital em PDF, escolhi o tema "Sistema de Gestão de Estudantes" e combinei de seguirmos passo a passo, sem a IA dar passos maiores do que eu pedir.
-- **O que fizemos com a resposta:** A IA leu o edital e resumiu o que é exigido (menu, relatórios, entregáveis, pontuação, PROMPTS.md) e propôs um plano em etapas seguindo o roteiro do professor. Usei o resumo para me organizar.
+- **Prompt:** Enviei o edital e o tema escolhido e pedi ajuda para planejar o trabalho passo a passo. Pedi também um modelo de e-mail ao professor e a explicação do projeto de exemplo.
+- **O que a IA fez:** Resumiu as exigências do edital, propôs um plano em etapas e explicou a estrutura do projeto do professor.
+- **O que eu fiz:** Escolhi Oracle e Python, fiz o fork do projeto de exemplo e criei o repositório.
 
-## Prompt 2 — E-mail para o professor
+## Etapa 2: modelagem e diagrama
 
-- **Data:** 28/10/2026
 - **Fonte:** Claude (Anthropic)
-- **Prompt:** Pedi ajuda para escrever um e-mail ao professor avisando que farei o trabalho sozinho.
-- **O que fizemos com a resposta:** Recebi um modelo de e-mail, preenchi com meus dados e enviei pelo meu e-mail.
+- **Prompt:** Perguntei como modelar várias notas e atividades por aluno, se a falta de disciplinas seria um problema e o que significava "turma". Pedi o diagrama relacional.
+- **O que a IA fez:** Propôs alternativas de modelo e escreveu o código Mermaid do diagrama.
+- **O que eu fiz:** Decidi pelo modelo de 4 tabelas (cursos, disciplinas, alunos e notas), defini que a turma é a combinação de disciplina e semestre (campo `semestre` em NOTAS), pedi a nota limitada entre 0 e 10, gerei a imagem do diagrama e guardei os arquivos em `diagrams/`.
 
-## Prompt 3 — Escolha do banco de dados
+## Etapa 3: script SQL de criação das tabelas
 
-- **Data:** 28/10/2026
 - **Fonte:** Claude (Anthropic)
-- **Prompt:** Informei que só tenho acesso à máquina virtual da faculdade quando estou lá e pedi para seguirmos o melhor caminho para rodar nela. Depois esclareci que o edital já indica o caminho e pedi para fazermos o que o professor pediu.
-- **O que fizemos com a resposta:** Decidimos usar Oracle com Python, seguindo o projeto de exemplo do professor.
+- **Prompt:** Pedi para fazermos o script juntos. Perguntei o que era o esquema `LABDATABASE`, o sufixo `CK` e como gerar os IDs.
+- **O que a IA fez:** Explicou cada comando e o padrão do projeto de exemplo, e apontou erros no meu código. Escreveu o bloco de `DROP`.
+- **O que eu fiz:** Escrevi os 4 `CREATE TABLE`, as 4 chaves estrangeiras, o `CHECK` da nota e as 3 sequences, e corrigi cada erro apontado.
 
-## Prompt 4 — Fork do projeto de exemplo
+## Etapa 4: classes do modelo
 
-- **Data:** 28/10/2026
 - **Fonte:** Claude (Anthropic)
-- **Prompt:** Pedi para começar a Etapa 0 (preparar o ambiente).
-- **O que fizemos com a resposta:** Segui as instruções e fiz o fork do `example_crud_oracle` na minha conta do GitHub.
+- **Prompt:** Pedi para escrever as classes em Python. Perguntei para que serve o `self` e se o `=None` é obrigatório. Pedi as classes `Disciplina`, `Aluno` e `Nota`.
+- **O que a IA fez:** Explicou o código de exemplo do professor e escreveu as classes `Disciplina`, `Aluno` e `Nota`.
+- **O que eu fiz:** Escrevi a classe `Curso` e corrigi os erros apontados (setters, nomes e `to_string`). Li as outras classes e respondi a uma pergunta de conferência sobre cada uma.
 
-## Prompt 5 — Conhecer o projeto do professor
+## Etapa 5: controllers
 
-- **Data:** 28/10/2026
 - **Fonte:** Claude (Anthropic)
-- **Prompt:** Enviei o link do meu fork e disse que o fork estava feito.
-- **O que fizemos com a resposta:** A IA leu a estrutura do projeto e explicou o que cada pasta faz (model, controller, conexion, sql, reports, utils, principal). Usei a explicação para entender o projeto antes de alterá-lo.
+- **Prompt:** Pedi os controllers, um método por vez, com explicação.
+- **O que a IA fez:** Escreveu os 4 controllers (inserir, atualizar e excluir), seguindo o `controller_cliente.py` do projeto de exemplo.
+- **O que eu fiz:** Li cada método, respondi a uma pergunta de conferência por método e salvei os arquivos.
 
-## Prompt 6 — Criação do PROMPTS.md
+## Etapa 6: relatórios, menus e programa principal
 
-- **Data:** 28/10/2026
 - **Fonte:** Claude (Anthropic)
-- **Prompt:** Pedi para criar o PROMPTS.md.
-- **O que fizemos com a resposta:** A IA gerou este arquivo com o registro dos prompts anteriores. Vou adicioná-lo ao repositório e atualizá-lo a cada novo prompt.
+- **Prompt:** Pedi os relatórios, os menus, a tela inicial e o `principal.py`.
+- **O que a IA fez:** Escreveu as 2 consultas dos relatórios (uma com `GROUP BY` e outra com `JOIN`), a classe `Relatorio`, os menus, a tela inicial e o `principal.py`, com as perguntas de continuação do edital.
+- **O que eu fiz:** Li as explicações, respondi às perguntas de conferência e salvei os arquivos.
 
+## Etapa 7: dados de exemplo, README e verificações
 
-## Prompt 7 — Escolha das entidades
-
-- **Data:** 28/10/2026
 - **Fonte:** Claude (Anthropic)
-- **Prompt:** Pedi para começar a Etapa 1 (modelagem). Depois perguntei se o aluno poderia ter mais de uma nota e mais de uma atividade, ou se só guardaríamos a média final.
-- **O que fizemos com a resposta:** A IA propôs entidades iniciais (cursos, alunos e notas) e explicou que a média não precisa ser guardada, porque pode ser calculada com `AVG()`. Aceitei a ideia de guardar uma linha por nota, com um campo de atividade.
-
-## Prompt 8 — Disciplinas
-
-- **Data:** 28/10/2026
-- **Fonte:** Claude (Anthropic)
-- **Prompt:** Perguntei se o professor poderia reclamar da falta de disciplinas. Disse que a explicação ficou confusa porque misturava curso e disciplina. Depois escolhi o modelo completo.
-- **O que fizemos com a resposta:** A IA esclareceu a diferença entre curso (a graduação) e disciplina (a matéria) e apresentou duas opções. Escolhi a opção com 4 tabelas: CURSOS, DISCIPLINAS, ALUNOS e NOTAS.
-
-## Prompt 9 — Campos de CURSOS, DISCIPLINAS e ALUNOS
-
-- **Data:** 28/10/2026
-- **Fonte:** Claude (Anthropic)
-- **Prompt:** Concordei com cada tabela e pedi para seguir para a próxima, uma de cada vez.
-- **O que fizemos com a resposta:** A IA propôs os campos, os tipos do Oracle e as chaves primárias e estrangeiras de cada tabela. Revisei e aceitei, com a mudança descrita no Prompt 10.
-
-## Prompt 10 — Turma e semestre
-
-- **Data:** 28/10/2026
-- **Fonte:** Claude (Anthropic)
-- **Prompt:** Questionei se a turma era mesmo necessária, de onde vinha a exigência de média por turma e se poderia ser por disciplina ou curso. Expliquei que, para mim, turma é a média dos alunos de uma disciplina em um semestre.
-- **O que fizemos com a resposta:** A IA confirmou que a exigência vinha só da tabela de temas sugeridos do edital, que não é obrigatória. Reconheceu que a minha definição de turma estava certa. Decidimos tirar a turma de ALUNOS e acrescentar o campo `semestre` em NOTAS. A turma passa a ser a combinação de disciplina e semestre.
-
-## Prompt 11 — Tabela NOTAS e regras
-
-- **Data:** 28/10/2026
-- **Fonte:** Claude (Anthropic)
-- **Prompt:** Concordei com os campos de NOTAS. Perguntei se era possível limitar as notas entre 0 e 10 e se a nota final poderia ser a média simples das notas de cada aluno por disciplina e semestre.
-- **O que fizemos com a resposta:** A IA explicou a restrição `CHECK (nota BETWEEN 0 AND 10)` e o cálculo da média com `AVG` e `GROUP BY`, sem guardar a nota final na tabela. Aceitei as duas ideias.
-
-## Prompt 12 — Diagrama relacional
-
-- **Data:** 28/10/2026
-- **Fonte:** Claude (Anthropic)
-- **Prompt:** Pedi para criar o diagrama.
-- **O que fizemos com a resposta:** A IA escreveu o código Mermaid. Gerei a imagem no mermaid.live, conferi as tabelas e as ligações, troquei o nome de uma ligação e guardei o PNG e o arquivo `.mmd` na pasta `diagrams/`.
-
-- 
-## Prompt 13 — Script de criação das tabelas
-
-- **Data:** 29/10/2026
-- **Fonte:** Claude (Anthropic)
-- **Prompt:** Pedi para fazermos o script SQL juntos, para eu aprender. Escrevi o código de cada tabela e das chaves estrangeiras, e a IA conferiu e apontou erros (`VARCHAR` em vez de `VARCHAR2`, campo faltando, nomes trocados, erros de digitação e tipos diferentes do diagrama). Também perguntei o que era LABDATABASE e o que era "CK".
-- **O que fizemos com a resposta:** A IA explicou cada comando (`CREATE TABLE`, `PRIMARY KEY`, `ALTER TABLE ... FOREIGN KEY`, `CHECK`) e o padrão de nomes do professor. Corrigi meus erros e montei o arquivo `sql/create_tables_estudantes.sql`.
-
-
-
-## Prompt 14 — Classes do modelo em Python
-
-- **Data:** 29/10/2026
-- **Fonte:** Claude (Anthropic)
-- **Prompt:** Pedi para começar a Etapa 2 passo a passo. Escrevi a classe `Curso` com a ajuda da IA, que corrigiu meus erros (setters guardando no atributo errado, nomes inconsistentes, `to_string` faltando). Perguntei por que o `self` existe e se o `=None` é obrigatório. Depois pedi que a IA escrevesse as classes `Disciplina`, `Aluno` e `Nota`, por falta de tempo.
-- **O que fizemos com a resposta:** Li cada classe e respondi a uma pergunta de conferência sobre cada uma (o que acontece com `curso=None`, por que o objeto guarda a associação completa e como chegar ao curso a partir de uma nota). Salvei os arquivos em `src/model/`.
-
-
-
-## Prompt 15 — Controllers em Python
-
-- **Data:** 29/10/2026
-- **Fonte:** Claude (Anthropic)
-- **Prompt:** Por falta de tempo, pedi que a IA escrevesse os controllers (`Controller_Curso`, `Controller_Disciplina`, `Controller_Aluno` e `Controller_Nota`), um método por vez, explicando cada um. Em cada método, respondi a uma pergunta de conferência.
-- **O que fizemos com a resposta:** Salvei cada controller em `src/controller/`. A IA seguiu o molde do `controller_cliente.py` do professor, com sequences para os IDs, verificação de chaves estrangeiras antes de excluir, confirmação S/N e validação da nota entre 0 e 10. O código ainda não foi testado no Oracle. Vou estudar cada controller depois da entrega.
+- **Prompt:** Pedi o que faltava para o projeto rodar e ser entregue.
+- **O que a IA fez:** Escreveu os dados de exemplo, o `create_tables_and_records.py` e o `README.MD`, e verificou a sintaxe dos arquivos, os imports e as consultas dos relatórios em um banco de teste.
+- **O que eu fiz:** Salvei os arquivos. O teste no Oracle da máquina virtual será feito por mim, e o resultado será registrado aqui: .
