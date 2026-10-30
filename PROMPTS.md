@@ -49,9 +49,9 @@ Registro do uso de IA neste trabalho, conforme o item 5 das Observações Import
 - **O que a IA fez:** Escreveu as 2 consultas dos relatórios (uma com `GROUP BY` e outra com `JOIN`), a classe `Relatorio`, os menus, a tela inicial e o `principal.py`, com as perguntas de continuação do edital.
 - **O que eu fiz:** Li as explicações, respondi às perguntas de conferência e salvei os arquivos.
 
-## Etapa 7: dados de exemplo, README e verificações
+## Etapa 7: dados de exemplo, README e teste na máquina virtual
 
 - **Fonte:** Claude (Anthropic)
-- **Prompt:** Pedi o que faltava para o projeto rodar e ser entregue.
+- **Prompt:** Pedi o que faltava para o projeto rodar e ser entregue, e ajuda para testá-lo na máquina virtual da disciplina.
 - **O que a IA fez:** Escreveu os dados de exemplo, o `create_tables_and_records.py` e o `README.MD`, e verificou a sintaxe dos arquivos, os imports e as consultas dos relatórios em um banco de teste.
-- **O que eu fiz:** Salvei os arquivos. O teste no Oracle da máquina virtual será feito por mim, e o resultado será registrado aqui: .
+- **O que eu fiz:** Salvei os arquivos e testei o sistema no Oracle da máquina virtual. Nesse teste, a IA me orientou nos comandos e escreveu a versão ajustada do `oracle_queries.py` (uso de `oracledb`, serviço `XEPDB1` e leitura das credenciais). Apliquei os ajustes e atualizei o `README.MD` e o `requirements.txt`.
