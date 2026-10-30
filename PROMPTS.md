@@ -4,7 +4,7 @@ Registro do uso de IA neste trabalho, conforme o item 5 das Observações Import
 
 - **Ferramenta:** Claude (Anthropic), via Claude Code
 - **Autor dos prompts:** Luiz Henrique Garcia
-- **Período:** 28/10/2026 a 30/10/2026
+- **Período:** 22/10/2026 a 30/10/2026
 - **Como usei a IA:** trabalhei em passos pequenos. A IA propunha ou escrevia, e eu lia, corrigia, respondia a perguntas de conferência e salvava no repositório.
 
 ## Etapa 1: entendimento do edital e planejamento
