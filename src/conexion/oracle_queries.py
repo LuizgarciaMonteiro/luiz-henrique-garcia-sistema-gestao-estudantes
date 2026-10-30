@@ -8,9 +8,12 @@
 #                  (1) https://cx-oracle.readthedocs.io/en/latest/user_guide/sql_execution.html
 #                  (2) https://cx-oracle.readthedocs.io/en/latest/user_guide/plsql_execution.html
 #                  (3) https://cx-oracle.readthedocs.io/en/latest/index.html
+#
+# Adaptação: uso da biblioteca oracledb (sucessora da cx_Oracle), conexão pelo
+# serviço XEPDB1 (in_container=True) e leitura das credenciais com strip().
 ###########################################################################
 import json
-import cx_Oracle
+import oracledb
 from pandas import DataFrame
 
 class OracleQueries:
@@ -23,7 +26,7 @@ class OracleQueries:
         self.sid = 'XE'
 
         with open("conexion/passphrase/authentication.oracle", "r") as f:
-            self.user, self.passwd = f.read().split(',')            
+            self.user, self.passwd = f.read().strip().split(',')
 
     def __del__(self):
         if self.cur:
@@ -40,12 +43,12 @@ class OracleQueries:
         return: string de conexão
         '''
         if not in_container:
-            string_connection = cx_Oracle.makedsn(host=self.host,
+            string_connection = oracledb.makedsn(host=self.host,
                                                 port=self.port,
                                                 sid=self.sid
                                                 )
         elif in_container:
-            string_connection = cx_Oracle.makedsn(host=self.host,
+            string_connection = oracledb.makedsn(host=self.host,
                                                 port=self.port,
                                                 service_name=self.service_name
                                                 )
@@ -59,12 +62,12 @@ class OracleQueries:
         - password: senha do usuário criado para utilização do banco de dados
         - dsn: string de conexão para acessar o banco de dados oracle
         - enconding: codificação de caracteres para não haver erros com caracteres em português
-        return: um cursor que permite utilizar as funções da biblioteca cx_Oracle
+        return: um cursor que permite utilizar as funções da biblioteca oracledb
         '''
 
-        self.conn = cx_Oracle.connect(user=self.user,
+        self.conn = oracledb.connect(user=self.user,
                                       password=self.passwd,
-                                      dsn=self.connectionString()
+                                      dsn=self.connectionString(in_container=True)
                                      )
         self.cur = self.conn.cursor()
         return self.cur
