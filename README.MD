@@ -22,42 +22,49 @@ Os relacionamentos são: um curso tem várias disciplinas e vários alunos; um a
 
 Diagrama relacional: [diagrams/DIAGRAMA_RELACIONAL_ESTUDANTES.png](diagrams/DIAGRAMA_RELACIONAL_ESTUDANTES.png) (código-fonte em [Mermaid](diagrams/DIAGRAMA_RELACIONAL_ESTUDANTES.mmd)).
 
-## Requisitos (Linux)
+## Ambiente
 
-- Python 3
-- Banco de dados Oracle em execução no mesmo computador (`localhost:1521`, serviço `XE`)
-- Bibliotecas Python do arquivo `src/requirements.txt`: `cx_Oracle`, `pandas` e `numpy`
+O projeto foi executado e testado na máquina virtual **LabDatabase** da disciplina:
 
-> CONFIRMAR: se a máquina virtual da disciplina já tem essas bibliotecas instaladas.
+- Ubuntu 24.04
+- Python 3.12 (com `venv`)
+- Oracle Database 21c XE, em um container Docker (`localhost:1521`, serviço `XEPDB1`)
+- Bibliotecas Python: `oracledb`, `pandas` e `numpy`, listadas em `src/requirements.txt`
 
-## Configuração
+A conexão usa a biblioteca `oracledb` no lugar da `cx_Oracle` do projeto de exemplo, porque a `cx_Oracle` não instala no Python 3.12 e a `oracledb` não precisa de cliente Oracle instalado.
 
-1. Baixe o projeto:
+## Como executar (Linux)
+
+1. Ligar o Oracle. O container leva alguns minutos para ficar pronto depois de ligado:
 
 ```shell
+cd ~/database_services
+docker compose up -d oracle
+```
+
+2. Baixar o projeto:
+
+```shell
+cd ~
 git clone https://github.com/LuizgarciaMonteiro/luiz-henrique-garcia-sistema-gestao-estudantes.git
-cd luiz-henrique-garcia-sistema-gestao-estudantes
+cd luiz-henrique-garcia-sistema-gestao-estudantes/src
 ```
 
-2. Instale as dependências, se necessário:
+3. Criar e ativar o ambiente virtual, e instalar as bibliotecas:
 
 ```shell
-pip install -r src/requirements.txt
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
 ```
 
-3. Informe o usuário e a senha do Oracle no arquivo `src/conexion/passphrase/authentication.oracle`, no formato `usuario,senha`.
+4. Conferir o arquivo `conexion/passphrase/authentication.oracle`, que guarda o usuário e a senha do Oracle no formato `usuario,senha`. O conteúdo deve ser o do ambiente da disciplina:
 
-> CONFIRMAR: o usuário e a senha usados na máquina virtual.
-
-## Como executar
-
-Todos os comandos devem ser executados **de dentro da pasta `src`**:
-
-```shell
-cd src
+```
+system,oracle
 ```
 
-1. Criar as tabelas e inserir os dados de exemplo. Atenção: este comando apaga as tabelas existentes e todos os dados:
+5. Criar as tabelas e inserir os dados de exemplo. Atenção: este comando apaga as tabelas existentes e todos os dados:
 
 ```shell
 python create_tables_and_records.py
@@ -65,13 +72,15 @@ python create_tables_and_records.py
 
 Na primeira execução, aparecem erros de "tabela não existe" nos comandos `DROP`. É esperado.
 
-2. Executar o sistema:
+6. Executar o sistema:
 
 ```shell
 python principal.py
 ```
 
-3. Testar apenas a conexão com o banco (opcional):
+Todos os comandos dos passos 5 e 6 devem ser executados **de dentro da pasta `src`**, com o ambiente virtual ativado.
+
+Para testar apenas a conexão com o banco (opcional):
 
 ```shell
 python test.py
