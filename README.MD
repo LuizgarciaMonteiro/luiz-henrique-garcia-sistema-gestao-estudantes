@@ -6,6 +6,7 @@ Aplicação em Python que faz o CRUD de um sistema de gestão de estudantes em u
 - **Professor:** Howard Roatti
 - **Semestre:** 2026/2
 - **Autor:** Luiz Henrique Garcia
+- **Vídeo demonstrativo:** https://youtube.com/shorts/1YOxMYJSxh4?si=8H9I_hTHKmoaMvTk
 
 ## Modelo de dados
 
